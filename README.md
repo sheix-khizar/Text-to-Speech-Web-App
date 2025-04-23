@@ -38,6 +38,3 @@ Initial setup in progress. First release expected soon.
 
 ---
 
-## 📄 License
-
-MIT – use freely and contribute once it's live!

@@ -1,6 +1,5 @@
 # 🎤 TTS Maker Clone
 
-![TTS Maker Clone Screenshot](screenshot.png) <!-- Add your screenshot file or link -->
 
 ## 📝 Description
 

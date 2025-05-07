@@ -1,0 +1,277 @@
+<%- include('partials/header') %>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Hero Section -->
+        <div class="text-center py-16">
+            <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+                Free Online Text to Speech Converter
+            </h1>
+            <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500">
+                Convert text to natural sounding speech instantly with our AI voice generator
+            </p>
+        </div>
+
+        <!-- Quick Tutorial Section -->
+        <div class="bg-blue-50 rounded-xl p-8 mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">How to Use TTS Maker</h2>
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                    <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-600 font-bold text-xl">1</span>
+                    </div>
+                    <h3 class="font-medium text-gray-900 mb-2">Enter text</h3>
+                    <p class="text-gray-600 text-sm">Enter the text that needs to be converted into speech, the free limit is 20000 characters per week, some voices support unlimited free use.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                    <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-600 font-bold text-xl">2</span>
+                    </div>
+                    <h3 class="font-medium text-gray-900 mb-2">Select language and voice</h3>
+                    <p class="text-gray-600 text-sm">Choose the language for the text and your preferred voice style, each language has multiple voice styles.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                    <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-600 font-bold text-xl">3</span>
+                    </div>
+                    <h3 class="font-medium text-gray-900 mb-2">Convert text to speech</h3>
+                    <p class="text-gray-600 text-sm">Click the 'Convert to Speech' button to start converting the text to speech, which may take a few minutes.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                    <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-600 font-bold text-xl">4</span>
+                    </div>
+                    <h3 class="font-medium text-gray-900 mb-2">Listen and download</h3>
+                    <p class="text-gray-600 text-sm">After the text is converted to speech, you can listen to it online or download the audio file.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Converter Section -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-12">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-900">Text to Speech Converter</h2>
+                <p class="text-gray-600 text-sm mt-1">Enter your text below and customize the voice settings</p>
+            </div>
+            
+            <div class="p-6">
+                <!-- Text Input -->
+                <div class="mb-6">
+                    <label for="textInput" class="block text-sm font-medium text-gray-700 mb-2">Your Text</label>
+                    <textarea id="textInput" rows="8" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Type or paste your text here..."></textarea>
+                    <div class="flex justify-between mt-1">
+                        <span class="text-xs text-gray-500">Max 20,000 characters</span>
+                        <span id="charCount" class="text-xs text-gray-500">0/20,000</span>
+                    </div>
+                </div>
+
+                <!-- Voice Controls -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Voice Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Voice Style</label>
+                        <select id="voiceSelect" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Default Voice</option>
+                            <!-- Voices will be populated by JavaScript -->
+                        </select>
+                    </div>
+
+                    <!-- Speed Control -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Speaking Rate: <span id="speedValue">1.0x</span></label>
+                        <input id="speedInput" type="range" min="0.5" max="2" step="0.1" value="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+
+                    <!-- Pitch Control -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Pitch: <span id="pitchValue">1.0</span></label>
+                        <input id="pitchInput" type="range" min="0.5" max="2" step="0.1" value="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <button id="playBtn" class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-sm flex items-center">
+                        <i class="fas fa-play mr-2"></i> Convert to Speech
+                    </button>
+                    <button id="pauseBtn" class="px-6 py-3 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 shadow-sm flex items-center">
+                        <i class="fas fa-pause mr-2"></i> Pause
+                    </button>
+                    <button id="resumeBtn" class="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 shadow-sm flex items-center">
+                        <i class="fas fa-redo mr-2"></i> Resume
+                    </button>
+                    <button id="stopBtn" class="px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm flex items-center">
+                        <i class="fas fa-stop mr-2"></i> Stop
+                    </button>
+                    <button id="downloadBtn" class="px-6 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 shadow-sm flex items-center">
+                        <i class="fas fa-download mr-2"></i> Download MP3
+                    </button>
+                    <button id="clearBtn" class="px-6 py-3 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 shadow-sm flex items-center">
+                        <i class="fas fa-trash-alt mr-2"></i> Clear
+                    </button>
+                </div>
+
+                <!-- Status and Player -->
+                <div id="status" class="mt-6 text-center text-gray-600"></div>
+                
+                <div id="playerContainer" class="mt-6 hidden">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <audio id="audioPlayer" controls class="w-full"></audio>
+                        <div id="progressContainer" class="mt-4">
+                            <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                <span id="currentTime">0:00</span>
+                                <span id="duration">0:00</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div id="progressBar" class="bg-blue-600 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Scenarios Section -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Usage Scenarios</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <div class="flex items-start">
+                        <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                            <i class="fas fa-film text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-900 mb-2">Video dubbing</h3>
+                            <p class="text-gray-600">TTSMaker as a versatile AI voice generator can generate AI voices for various scenarios and is widely used in video dubbing for platforms like YouTube and TikTok.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <div class="flex items-start">
+                        <div class="bg-green-100 p-3 rounded-lg mr-4">
+                            <i class="fas fa-book-open text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-900 mb-2">Audiobook reading</h3>
+                            <p class="text-gray-600">TTSMaker can convert text into natural speech, and you can easily create and enjoy audiobooks, bringing stories to life through immersive narration.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <div class="flex items-start">
+                        <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                            <i class="fas fa-graduation-cap text-yellow-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-900 mb-2">Education & Training</h3>
+                            <p class="text-gray-600">TTSMaker can convert text to sound and read it aloud, can help you learn the pronunciation of words, and supports multiple languages, it has now become a useful tool for language learners.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <div class="flex items-start">
+                        <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                            <i class="fas fa-ad text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-900 mb-2">Marketing & Advertising</h3>
+                            <p class="text-gray-600">TTSMaker generates persuasive voice-overs to help marketers and advertisers explain a product's features to others, with high-quality audio.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="bg-gray-50 rounded-xl p-8 mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Key Features</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div class="bg-white p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-sm">
+                        <i class="fas fa-bolt text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Fast speech synthesis</h3>
+                    <p class="text-gray-600 text-sm">We use a Free Browser API to enable fast text-to-speech conversion in a very short time.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-white p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-sm">
+                        <i class="fas fa-dollar-sign text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Free for commercial use</h3>
+                    <p class="text-gray-600 text-sm">You will own 100% copyright of the synthesized audio file and may use it for any legal purpose, including commercial use.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-white p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-sm">
+                        <i class="fas fa-robot text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">More voices and features</h3>
+                    <p class="text-gray-600 text-sm">We are constantly updating this text-to-speech tool to support more languages and voices, as well as some new features.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Support Section -->
+        <div class="bg-white rounded-xl shadow-sm p-8 mb-12 border border-gray-200">
+            <div class="text-center">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Free TTSMaker</h2>
+                <p class="text-gray-600 mb-6">This is just a practice project created using Web Browser APIs for learning and demonstration purposes.
+                </p>
+                <div class="bg-blue-50 inline-block px-4 py-2 rounded-lg">
+                    <p class="text-blue-700 font-medium"><i class="fas fa-quote-left mr-2"></i>TTSMaker is a free AI voice generator that allows me to create AI voices freely.<i class="fas fa-quote-right ml-2"></i></p>
+                    <p class="italic text-right text-sm text-gray-600 mt-1">— TTS Team</p>
+                </div>
+            </div>
+        </div>
+
+   <!-- FAQ Section -->
+<section class="max-w-3xl mx-auto mb-12">
+    <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Frequently Asked Questions</h2>
+    <div class="bg-white shadow rounded-lg border border-gray-200 divide-y divide-gray-200">
+      
+      <details class="p-6 group">
+        <summary class="cursor-pointer font-medium text-gray-900 group-open:text-blue-600">What is TTSMaker?</summary>
+        <p class="mt-2 text-gray-600">
+          TTSMaker is an online text-to-speech tool, also known as an AI voice generator, that can convert text to audio. You can play or download audio files.
+        </p>
+      </details>
+  
+      <details class="p-6 group">
+        <summary class="cursor-pointer font-medium text-gray-900 group-open:text-blue-600">How to convert text to speech?</summary>
+        <p class="mt-2 text-gray-600">
+          First, enter the text, then select the language and your preferred AI voice, and finally convert the text into speech.
+        </p>
+      </details>
+  
+      <details class="p-6 group">
+        <summary class="cursor-pointer font-medium text-gray-900 group-open:text-blue-600">What are the advantages of AI text to speech?</summary>
+        <p class="mt-2 text-gray-600">
+          TTSMaker uses advanced AI text-to-speech technology to quickly and easily convert text into speech. It ensures high-quality, natural-sounding voices, making it ideal for generating large amounts of audio content.
+        </p>
+      </details>
+  
+      <details class="p-6 group">
+        <summary class="cursor-pointer font-medium text-gray-900 group-open:text-blue-600">Is text to speech free to use?</summary>
+        <p class="mt-2 text-gray-600">
+          Yes, TTSMaker offers a permanent free version for users, although policies may be adjusted in the future.
+        </p>
+      </details>
+  
+      <details class="p-6 group">
+        <summary class="cursor-pointer font-medium text-gray-900 group-open:text-blue-600">Can I use the synthesized speech for commercial use?</summary>
+        <p class="mt-2 text-gray-600">
+          Yes, you have 100% copyright ownership of the audio files and can use them for any purpose, including commercial use, provided it complies with local laws.
+        </p>
+      </details>
+  
+      <details class="p-6 group">
+        <summary class="cursor-pointer font-medium text-gray-900 group-open:text-blue-600">Can I use the audio generated by TTSMaker on platforms like YouTube and TikTok? Is it necessary to attribute the source?</summary>
+        <p class="mt-2 text-gray-600">
+          You may freely use the audio on platforms such as YouTube, TikTok, and Podcasts. Attribution is not mandatory, but appreciated if provided.
+        </p>
+      </details>
+  
+    </div>
+  </section>
+  
+    </div>
+
+<%- include('partials/footer') %>

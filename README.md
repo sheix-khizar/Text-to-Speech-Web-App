@@ -14,9 +14,9 @@
 - 📱 Fully responsive design  
 - 🎨 Professional UI with Tailwind CSS
 
-## 🚀 Live Demo
+## 📸 Preview
 
-🔗Coming soon!
+![Screenshot](./preview.png)
 
 ## 🛠️ Technologies Used
 
